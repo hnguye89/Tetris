@@ -28,5 +28,11 @@ namespace Tetris
                 yield return new Position(p.Row + offset.Row, p.Column + offset.Column);
             }
         }
+        /* A method that rotates the block 90 degrees clockwise */
+        /* By doing that is by incrementing the current rotation state wrapping around to zero if it's  in the final state */
+        public void rotateCW()
+        {
+            rotationState = (rotationState+ 1) % Tiles.Length;
+        }
     }
 }
