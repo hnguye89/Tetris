@@ -17,5 +17,14 @@
             Columns = columns;
             grid = new int[rows, columns];
         }
+        /* this will check if a given row and column is inside the grid or not*/
+        public bool isInside(int r, int c)
+        {
+            /* To be inside the grid, the row must be greater than or equal to 0  
+               and less than the number of rows. Similarily for the column, it must be less than
+               the number of columns.
+             */
+            return r >= 0 && r < Rows && c >= 0 && c < Columns; 
+        }
     }
 }
