@@ -47,6 +47,9 @@
             return true;
         }
         /* This method checks if a row is empty */
+        /* When there are full rows they need to be cleared
+         * and the rows above should be move down
+         */
         public bool isRowEmpty(int r)
         {
             for (int c = 0; c < Columns; c++)
@@ -58,5 +61,6 @@
             }
             return true;
         }
+
     }
 }
