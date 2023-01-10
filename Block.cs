@@ -34,5 +34,17 @@ namespace Tetris
         {
             rotationState = (rotationState+ 1) % Tiles.Length;
         }
+        /* A method to rotate counter-clockwise */ 
+        public void rotateCCw()
+        {
+            if(rotationState == 0)
+            {
+                rotationState = Tiles.Length - 1;
+            }
+            else
+            {
+                rotationState--;
+            }
+        }
     }
 }
