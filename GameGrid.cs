@@ -10,10 +10,12 @@
             get => grid[r, c];
             set => grid[r, c] = value;
         }
-
-        public GameGrid(int rows,)
+        /* This class save the number of rows and columns and initialize the array*/
+        public GameGrid(int rows, int columns)
         {
-
+            Rows = rows;
+            Columns = columns;
+            grid = new int[rows, columns];
         }
     }
 }
