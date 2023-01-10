@@ -34,5 +34,17 @@
              */
             return isInside(r, c) && grid[r, c] == 0;
         }
+        /* This method checks if an entire row is full */ 
+        public bool isRowFull(int r)
+        {
+            for(int c =0; c < Columns; c++)
+            {
+                if (grid[r,c] == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
