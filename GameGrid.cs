@@ -78,5 +78,28 @@
                 grid[r, c] = 0;
             }
         }
+        /* This method can clear rows */
+        public int ClearFullRows()
+        {
+            int cleared = 0; /* Cleared variable starts at 0 and then, move from the bottom row towards the top. */
+            
+            /* Check if the current row is full and if it is we clear it 
+             * and increment cleared */
+            for(int r = Rows-1; r >= 0; r--)
+            {
+                if (isRowFull(r))
+                {
+                    ClearRow(r);
+                    cleared++;
+                }
+                /* if cleared is equal to zero, then we move the current row down 
+                 * by the number of cleared rows  */
+                else if (cleared > 0)
+                {
+                    MoveRowDown(r, cleared);
+                }
+            }
+            return cleared; /* return the number of cleared rows */
+        }
     }
 }
