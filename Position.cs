@@ -1,6 +1,6 @@
 ﻿namespace Tetris
 {
-    internal class Position
+    public class Position
     {
         /* store row and column */
         public int Row { get; set; }
