@@ -10,7 +10,7 @@
             get => grid[r, c];
             set => grid[r, c] = value;
         }
-        /* This class save the number of rows and columns and initialize the array */
+        /* This method save the number of rows and columns and initialize the array */
         public GameGrid(int rows, int columns)
         {
             Rows = rows;
@@ -61,6 +61,13 @@
             }
             return true;
         }
-
+        /* This method clears a row */
+        private void ClearRow(int r)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
+                grid[r, c] = 0;
+            }
+        }
     }
 }
