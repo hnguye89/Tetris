@@ -46,5 +46,17 @@
             }
             return true;
         }
+        /* This method checks if a row is empty */
+        public bool isRowEmpty(int r)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
+                if (grid[r, c] != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
