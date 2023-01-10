@@ -46,5 +46,11 @@ namespace Tetris
                 rotationState--;
             }
         }
+        /* A move method which moves the block by a given number of rows and columns */
+        public void Move(int rows, int columns)
+        {
+            offset.Row += rows;
+            offset.Column += columns;
+        }
     }
 }
