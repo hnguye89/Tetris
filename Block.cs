@@ -52,5 +52,12 @@ namespace Tetris
             offset.Row += rows;
             offset.Column += columns;
         }
+        /* A reset method which resets the rotation and position */
+        public void Reset()
+        {
+            rotationState = 0;
+            offset.Row = StartOffset.Row;
+            offset.Column = StartOffset.Column;
+        }
     }
 }
