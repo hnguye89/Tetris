@@ -1,6 +1,6 @@
 ﻿namespace Tetris
 {
-    /* iBlock inherits block */
+    /* iBlock inherits Block */
     public class iBlock : Block
     {
         /* This store the tile positions for the four rotation states */
