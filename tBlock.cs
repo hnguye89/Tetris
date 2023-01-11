@@ -1,6 +1,6 @@
 ﻿namespace Tetris
 {
-    /* tBlock inherits Block class input */
+    /* tBlock inherits Block class */
     public class tBlock : Block
     {
         public override int Id => 6;
