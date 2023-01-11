@@ -3,6 +3,7 @@
     /* oBlock inherits Block class */
     public class oBlock : Block
     {
+        /* This block is unique because it occupies the same positions in eery rotation state */
         private readonly Position[][] tiles = new Position[][]
         {
             new Position[] {new(0,0), new(0, 1), new(1,0), new(1,1) }
