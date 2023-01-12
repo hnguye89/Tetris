@@ -1,12 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tetris
 {
-    internal class BlockQueue
+    public class BlockQueue
     {
+        /* This will contain a block array with an instance of the 7 block classes */
+        private readonly Block[] blocks = new Block[]
+        {
+            new iBlock(),
+            new jBlock(),
+            new LBlock(),
+            new oBlock(),
+            new sBlock(),
+            new tBlock(),
+            new zBlock(),
+        };
+        /* This is a random object */
+        private readonly Random random = new Random();
+        /* A property for the next block in the queue */
+        public Block NextBlock { get; private set; }
+        /* This contructor initiialize the next block with a randomblock */
+        public BlockQueue()
+        {
+            NextBlock = randomBlock(); 
+        }
+        /* This method returns a random block */
+        public Block randomBlock()
+        {
+            return blocks[random.Next(blocks.Length)];
+        }
+        /* This method returns the next block and updates the property */
+        public Block getandUpdate()
+        {
+            /* Since we don't want to return the same block twice in a row, 
+             * We keep picking until we get a new one */
+            
+            Block block = NextBlock;
+
+            do
+            {
+                NextBlock = randomBlock();
+            } while (block.Id == NextBlock.Id);
+
+            return block;
+        }
+      
     }
 }
