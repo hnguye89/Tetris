@@ -1,4 +1,4 @@
-﻿namespace Tetris.obj
+﻿namespace Tetris
 {
     /* sBlock inherits Block */
     public class sBlock : Block

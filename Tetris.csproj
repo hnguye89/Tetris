@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="obj\sBlock.cs" />
+    <Folder Include="obj\" />
   </ItemGroup>
 
 </Project>
