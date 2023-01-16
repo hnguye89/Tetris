@@ -155,7 +155,7 @@
 
             if (!blockFits())
             {
-                currentBlock.Move(-1, 0);
+                currentBlock.Move(-1, 0); 
                 placeBlock(); /* we call the placeBlock method in case the block cannot be move down */
             }
         }
