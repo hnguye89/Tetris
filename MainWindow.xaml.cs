@@ -34,6 +34,9 @@ namespace Tetris
             new BitmapImage(new Uri("assets/TilePurple.png", UriKind.Relative)),
             new BitmapImage(new Uri("assets/TileRed.png", UriKind.Relative))
         };
+        /// <summary>
+        /// Array full of tile block images
+        /// </summary>
         private readonly ImageSource[] blockImages = new ImageSource[]
         {
             new BitmapImage(new Uri("assets/Block-Empty.png", UriKind.Relative)),
@@ -45,9 +48,41 @@ namespace Tetris
             new BitmapImage(new Uri("assets/Block-T.png", UriKind.Relative)),
             new BitmapImage(new Uri("assets/Block-Z.png", UriKind.Relative))
         };
+
+        private readonly Image[,] imageControls;
+        private readonly int maxDelay = 1000;
+        private readonly int minDelay = 75;
+        private readonly int delayDecrease = 25;
+
+        private GameState gameState = new GameState();
         public MainWindow()
         {
             InitializeComponent();
+            imageControls = SetupGameCanvas(gameState.GameGrid); 
+        }
+
+        private Image[,] SetupGameCanvas(GameGrid grid)
+        {
+            Image[,] imageControls = new Image[grid.Rows, grid.Columns];
+            int cellSize = 25;
+
+            for(int r = 0; r < grid.Rows; r++)
+            {
+                for(int c = 0; c < grid.Columns; c++)
+                {
+                    Image imageControl = new Image
+                    {
+                        Width = cellSize,
+                        Height = cellSize,
+                    };
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize + 10);
+                    Canvas.SetLeft(imageControl, cellSize * cellSize);
+                    GameCanvas.Children.Add(imageControl);
+                    imageControls[r, c] = imageControl;
+                }
+            }
+            return imageControls; 
+
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
