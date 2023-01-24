@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -83,6 +84,19 @@ namespace Tetris
             }
             return imageControls; 
 
+        }
+
+        private void drawGrid(GameGrid grid)
+        {
+            for(int r = 0; r < grid.Rows; r++)
+            {
+                for (int c = 0; c < grid.Columns; c++)
+                {
+                    int id = grid[r,c];
+                    imageControls[r,c].Opacity= 1;
+                    imageControls[r, c].Source = tileImages[id];
+                }
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
