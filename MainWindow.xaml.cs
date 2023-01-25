@@ -54,28 +54,35 @@ namespace Tetris
         private readonly int maxDelay = 1000;
         private readonly int minDelay = 75;
         private readonly int delayDecrease = 25;
-
+        /*A method for GameState*/
         private GameState gameState = new GameState();
+        /* A contstructor initialized the imageControls array 
+         * by calling SetupGameCanvas method */
         public MainWindow()
         {
             InitializeComponent();
             imageControls = SetupGameCanvas(gameState.GameGrid); 
         }
-
+        
+        /* A method to set up the image controls correctly in the canvas */ 
         private Image[,] SetupGameCanvas(GameGrid grid)
         {
+            /* imageControls array will have  22 rows and 10 columns */
             Image[,] imageControls = new Image[grid.Rows, grid.Columns];
-            int cellSize = 25;
-
+            int cellSize = 25; /* a veriable for the width and height of each cell */
+            /* loop through every row and column in the game grid */ 
             for(int r = 0; r < grid.Rows; r++)
             {
                 for(int c = 0; c < grid.Columns; c++)
                 {
+                    /* create new image control with 25 pixels width and height for each position */
                     Image imageControl = new Image
                     {
                         Width = cellSize,
                         Height = cellSize,
                     };
+                    /* set the distance from the top of the canvas 
+                     * to the top of the image equal to r - 2 cell size */
                     Canvas.SetTop(imageControl, (r - 2) * cellSize + 10);
                     Canvas.SetLeft(imageControl, cellSize * cellSize);
                     GameCanvas.Children.Add(imageControl);
@@ -83,7 +90,6 @@ namespace Tetris
                 }
             }
             return imageControls; 
-
         }
 
         private void drawGrid(GameGrid grid)
@@ -99,9 +105,117 @@ namespace Tetris
             }
         }
 
+        private void drawBlock(Block block)
+        {
+            foreach (Position p in block.TilePositions())
+            {
+                imageControls[p.Row,p.Column].Opacity = 1;
+                imageControls[p.Row, p.Column].Source = tileImages[block.Id];
+            }
+        }
+
+        private void drawNextBlock(BlockQueue blockQueue)
+        {
+            Block next = blockQueue.NextBlock;
+            NextImage.Source = blockImages[next.Id];
+        }
+
+        private void drawHeldBlock(Block heldBlock)
+        {
+            if(heldBlock == null)
+            {
+                HoldImage.Source = blockImages[0];
+            }
+            else
+            {
+                HoldImage.Source = blockImages[heldBlock.Id];
+            }
+        }
+
+        private void drawGhostBlock(Block block)
+        {
+            int dropDistance = gameState.blockDropDistance();
+
+            foreach(Position p in block.TilePositions())
+            {
+                imageControls[p.Row + dropDistance, p.Column].Opacity = 0.25;
+                imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
+            }
+        }
+
+        private void Draw(GameState gameState)
+        {
+            drawGrid(gameState.GameGrid);
+            drawGhostBlock(gameState.CurrentBlock);
+            drawBlock(gameState.CurrentBlock);
+            drawNextBlock(gameState.BlockQuece);
+            drawHeldBlock(gameState.heldBlock);
+            ScoreText.Text = $"Score: {gameState.Score}";
+        }
+
+        private async Task gameLoop()
+        {
+            Draw(gameState);
+
+            while (!gameState.GameOver)
+            {
+                int delay = Math.Max(minDelay, maxDelay - (gameState.Score * delayDecrease));
+                await Task.Delay(delay);
+                gameState.moveBlockDown();
+                Draw(gameState);
+            }
+
+            GameOverMenu.Visibility = Visibility.Visible;
+            FinalScoreText.Text = $"Score: {gameState.Score}";
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (gameState.GameOver)
+            {
+                return;
+            }
 
+            switch (e.Key)
+            {
+                case Key.Left:
+                    gameState.moveBlockLeft();
+                    break;
+                case Key.Right:
+                    gameState.moveBlockRight();
+                    break;
+                case Key.Down:
+                    gameState.moveBlockDown();
+                    break;
+                case Key.Up:
+                    gameState.rotateBlockCW();
+                    break;
+                case Key.Z:
+                    gameState.rotateBlockCCW();
+                    break;
+                case Key.C:
+                    gameState.holdBlock();
+                    break;
+                case Key.Space:
+                    gameState.dropBlock();
+                    break;
+                default:
+                    return;
+            }
+
+            Draw(gameState);
+        }
+
+        private async void gameCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            await gameLoop();
+        }
+
+        private async void PlayAgain_Click(object sender, RoutedEventArgs e)
+        {
+            gameState = new GameState();
+            GameOverMenu.Visibility = Visibility.Hidden;
+            await gameLoop();
         }
     }
 }
