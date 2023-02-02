@@ -91,7 +91,7 @@ namespace Tetris
             }
             return imageControls; 
         }
-
+        /* Looping through all positions */
         private void drawGrid(GameGrid grid)
         {
             for(int r = 0; r < grid.Rows; r++)
@@ -104,7 +104,7 @@ namespace Tetris
                 }
             }
         }
-
+        /* Looping through the tile positions and update the image sources */
         private void drawBlock(Block block)
         {
             foreach (Position p in block.TilePositions())
@@ -142,7 +142,7 @@ namespace Tetris
                 imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
             }
         }
-
+        /* This method draws both the grid and the current block */
         private void Draw(GameState gameState)
         {
             drawGrid(gameState.GameGrid);
@@ -168,7 +168,7 @@ namespace Tetris
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"Score: {gameState.Score}";
         }
-
+        /*Key binds: detecting some key presses */
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (gameState.GameOver)
@@ -205,7 +205,7 @@ namespace Tetris
 
             Draw(gameState);
         }
-
+        /* Call the Draw method when the game canvas has loaded */
         private async void gameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
             await gameLoop();

@@ -19,7 +19,7 @@
                 for(int i =0; i<2; i++)
                 {
                     currentBlock.Move(1, 0);
-                    if (!BlockFits())
+                    if (!blockFits())
                     {
                         currentBlock.Move(-1, 0);
                     }
@@ -176,7 +176,7 @@
         {
             int drop = GameGrid.Rows;
 
-            foreach(Position o in currentBlock.TilePositions())
+            foreach(Position p in currentBlock.TilePositions())
             {
                 drop = System.Math.Min(drop, tileDropDistance(p));
             }

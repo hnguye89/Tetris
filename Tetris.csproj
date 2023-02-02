@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="obj\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="assets\Background.png" />
     <Resource Include="assets\Block-Empty.png" />
     <Resource Include="assets\Block-I.png" />
