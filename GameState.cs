@@ -19,7 +19,7 @@
                 for(int i =0; i<2; i++)
                 {
                     currentBlock.Move(1, 0);
-                    if (!blockFits())
+                    if (!BlockFits())
                     {
                         currentBlock.Move(-1, 0);
                     }
@@ -39,18 +39,18 @@
         {
             GameGrid = new GameGrid(22, 10); /* GameGrid with 22 rows and 10 columns */
             BlockQuece = new BlockQueue(); /* This get a random block fpr the current block property */
-            currentBlock = BlockQuece.getandUpdate();
+            currentBlock = BlockQuece.GetandUpdate();
             canHold = true;
         }
         /* This method checks if the current block is in a legal position or not */
-        private bool blockFits()
+        private bool BlockFits()
         {
             /* the method loops over the tile positions of the current block
              * and if any of them are outside tje grid or overlapping another tile 
              * then it return false otherwise if we get through the entire loop, we return true */
             foreach (Position p in currentBlock.TilePositions())
             {
-                if(!GameGrid.isEmpty(p.Row, p.Column))
+                if(!GameGrid.IsEmpty(p.Row, p.Column))
                 {
                     return false;
                 }
@@ -59,7 +59,7 @@
             return true;
         }
 
-        public void holdBlock()
+        public void HoldBlock()
         {
             if (!canHold)
             {
@@ -68,7 +68,7 @@
             if(heldBlock == null)
             {
                 heldBlock = currentBlock;
-                currentBlock = BlockQuece.getandUpdate();
+                currentBlock = BlockQuece.GetandUpdate();
             }
             else
             {
@@ -80,53 +80,53 @@
             canHold = false; 
         }
         /* A method to rotate the current block clockwise but only it's possible to do so from where it is */
-        public void rotateBlockCW()
+        public void RotateBlockCW()
         {
-            currentBlock.rotateCW();
+            currentBlock.RotateCW();
             /* if it ends up in illegal position, then we rotate it back */
-            if (!blockFits())
+            if (!BlockFits())
             {
-                currentBlock.rotateCCw();
+                currentBlock.RotateCCw();
             }
         }
         /* A method to rotate the current block counter clockwise but only it's possible to do so from where it is */
-        public void rotateBlockCCW()
+        public void RotateBlockCCW()
         {
-            currentBlock.rotateCCw();
+            currentBlock.RotateCCw();
             /* if it ends up in illegal position, then we rotate it back */
-            if (!blockFits())
+            if (!BlockFits())
             {
-                currentBlock.rotateCW();
+                currentBlock.RotateCW();
             }
         }
         /* A method to move a current block from the left */ 
-        public void moveBlockLeft()
+        public void MoveBlockLeft()
         {
             currentBlock.Move(0, -1);
 
-            if (!blockFits())
+            if (!BlockFits())
             {
                 currentBlock.Move(0, 1);
             }
         }
         /* A method to move a current block from the right */
-        public void moveBlockRight()
+        public void MoveBlockRight()
         {
             currentBlock.Move(0, 1);
 
-            if (!blockFits())
+            if (!BlockFits())
             {
                 currentBlock.Move(0, -1);
             }
         }
         /* if the game is over */
         /* if  either of the hidden rows at the top are not empty then the game is lost */
-        private bool isGameOver()
+        private bool IsGameOver()
         {
-            return !(GameGrid.isRowEmpty(0) && GameGrid.isRowEmpty(1));
+            return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
         }
         /* A method will be called when the current block cannot be moved down */
-        private void placeBlock()
+        private void PlaceBlock()
         {
             /* it loops over the tile positions of the current block and sets those positions in the game grid 
              * equal to the block's id */ 
@@ -138,33 +138,33 @@
             /* then we clear any potentialy full rows */ 
             Score += GameGrid.ClearFullRows();
             /* and check if the game is over */
-            if (isGameOver())
+            if (IsGameOver())
             {
                 GameOver = true;
             }
             else /* if not, we update the current block */
             {
-                currentBlock = BlockQuece.getandUpdate();
+                currentBlock = BlockQuece.GetandUpdate();
                 canHold = true;
             }
         }
         /* A method that moves down the current block */ 
-        public void moveBlockDown()
+        public void MoveBlockDown()
         {
             currentBlock.Move(1, 0);
 
-            if (!blockFits())
+            if (!BlockFits())
             {
                 currentBlock.Move(-1, 0); 
-                placeBlock(); /* we call the placeBlock method in case the block cannot be move down */
+                PlaceBlock(); /* we call the placeBlock method in case the block cannot be move down */
             }
         }
 
-        private int tileDropDistance(Position p)
+        private int TileDropDistance(Position p)
         {
             int drop = 0;
 
-            while(GameGrid.isEmpty(p.Row + drop + 1, p.Column))
+            while(GameGrid.IsEmpty(p.Row + drop + 1, p.Column))
             {
                 drop++;
             }
@@ -172,22 +172,22 @@
             return drop;
         }
 
-        public int blockDropDistance()
+        public int BlockDropDistance()
         {
             int drop = GameGrid.Rows;
 
             foreach(Position p in currentBlock.TilePositions())
             {
-                drop = System.Math.Min(drop, tileDropDistance(p));
+                drop = System.Math.Min(drop, TileDropDistance(p));
             }
 
             return drop;
         }
 
-        public void dropBlock()
+        public void DropBlock()
         {  
-            CurrentBlock.Move(blockDropDistance(), 0);
-            placeBlock();
+            CurrentBlock.Move(BlockDropDistance(), 0);
+            PlaceBlock();
         }
 
     }

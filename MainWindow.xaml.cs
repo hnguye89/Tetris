@@ -92,7 +92,7 @@ namespace Tetris
             return imageControls; 
         }
         /* Looping through all positions */
-        private void drawGrid(GameGrid grid)
+        private void DrawGrid(GameGrid grid)
         {
             for(int r = 0; r < grid.Rows; r++)
             {
@@ -105,7 +105,7 @@ namespace Tetris
             }
         }
         /* Looping through the tile positions and update the image sources */
-        private void drawBlock(Block block)
+        private void DrawBlock(Block block)
         {
             foreach (Position p in block.TilePositions())
             {
@@ -114,13 +114,13 @@ namespace Tetris
             }
         }
 
-        private void drawNextBlock(BlockQueue blockQueue)
+        private void DrawNextBlock(BlockQueue blockQueue)
         {
             Block next = blockQueue.NextBlock;
             NextImage.Source = blockImages[next.Id];
         }
 
-        private void drawHeldBlock(Block heldBlock)
+        private void DrawHeldBlock(Block heldBlock)
         {
             if(heldBlock == null)
             {
@@ -132,9 +132,9 @@ namespace Tetris
             }
         }
 
-        private void drawGhostBlock(Block block)
+        private void DrawGhostBlock(Block block)
         {
-            int dropDistance = gameState.blockDropDistance();
+            int dropDistance = gameState.BlockDropDistance();
 
             foreach(Position p in block.TilePositions())
             {
@@ -145,15 +145,15 @@ namespace Tetris
         /* This method draws both the grid and the current block */
         private void Draw(GameState gameState)
         {
-            drawGrid(gameState.GameGrid);
-            drawGhostBlock(gameState.CurrentBlock);
-            drawBlock(gameState.CurrentBlock);
-            drawNextBlock(gameState.BlockQuece);
-            drawHeldBlock(gameState.heldBlock);
+            DrawGrid(gameState.GameGrid);
+            DrawGhostBlock(gameState.CurrentBlock);
+            DrawBlock(gameState.CurrentBlock);
+            DrawNextBlock(gameState.BlockQuece);
+            DrawHeldBlock(gameState.heldBlock);
             ScoreText.Text = $"Score: {gameState.Score}";
         }
 
-        private async Task gameLoop()
+        private async Task GameLoop()
         {
             Draw(gameState);
 
@@ -161,7 +161,7 @@ namespace Tetris
             {
                 int delay = Math.Max(minDelay, maxDelay - (gameState.Score * delayDecrease));
                 await Task.Delay(delay);
-                gameState.moveBlockDown();
+                gameState.MoveBlockDown();
                 Draw(gameState);
             }
 
@@ -179,25 +179,25 @@ namespace Tetris
             switch (e.Key)
             {
                 case Key.Left:
-                    gameState.moveBlockLeft();
+                    gameState.MoveBlockLeft();
                     break;
                 case Key.Right:
-                    gameState.moveBlockRight();
+                    gameState.MoveBlockRight();
                     break;
                 case Key.Down:
-                    gameState.moveBlockDown();
+                    gameState.MoveBlockDown();
                     break;
                 case Key.Up:
-                    gameState.rotateBlockCW();
+                    gameState.RotateBlockCW();
                     break;
                 case Key.Z:
-                    gameState.rotateBlockCCW();
+                    gameState.RotateBlockCCW();
                     break;
                 case Key.C:
-                    gameState.holdBlock();
+                    gameState.HoldBlock();
                     break;
                 case Key.Space:
-                    gameState.dropBlock();
+                    gameState.DropBlock();
                     break;
                 default:
                     return;
@@ -206,16 +206,16 @@ namespace Tetris
             Draw(gameState);
         }
         /* Call the Draw method when the game canvas has loaded */
-        private async void gameCanvas_Loaded(object sender, RoutedEventArgs e)
+        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            await gameLoop();
+            await GameLoop();
         }
 
         private async void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
             gameState = new GameState();
             GameOverMenu.Visibility = Visibility.Hidden;
-            await gameLoop();
+            await GameLoop();
         }
     }
 }

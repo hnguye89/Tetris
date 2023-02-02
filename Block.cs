@@ -30,12 +30,12 @@ namespace Tetris
         }
         /* A method that rotates the block 90 degrees clockwise */
         /* By doing that is by incrementing the current rotation state wrapping around to zero if it's  in the final state */
-        public void rotateCW()
+        public void RotateCW()
         {
             rotationState = (rotationState+ 1) % Tiles.Length;
         }
         /* A method to rotate counter-clockwise */ 
-        public void rotateCCw()
+        public void RotateCCw()
         {
             if(rotationState == 0)
             {

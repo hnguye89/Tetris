@@ -35,7 +35,7 @@
                     Width="250"
                     Height="510"
                     ClipToBounds="True"
-                    Loaded="gameCanvas_Loaded"/>
+                    Loaded="GameCanvas_Loaded"/>
         </Viewbox>
 
         <TextBlock x:Name="ScoreText"

@@ -22,15 +22,15 @@ namespace Tetris
         /* This contructor initiialize the next block with a randomblock */
         public BlockQueue()
         {
-            NextBlock = randomBlock(); 
+            NextBlock = RandomBlock(); 
         }
         /* This method returns a random block */
-        public Block randomBlock()
+        public Block RandomBlock()
         {
             return blocks[random.Next(blocks.Length)];
         }
         /* This method returns the next block and updates the property */
-        public Block getandUpdate()
+        public Block GetandUpdate()
         {
             /* Since we don't want to return the same block twice in a row, 
              * We keep picking until we get a new one */
@@ -39,7 +39,7 @@ namespace Tetris
 
             do
             {
-                NextBlock = randomBlock();
+                NextBlock = RandomBlock();
             } while (block.Id == NextBlock.Id);
 
             return block;

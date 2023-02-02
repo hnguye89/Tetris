@@ -18,7 +18,7 @@
             grid = new int[rows, columns];
         }
         /* This method will check if a given row and column is inside the grid or not */
-        public bool isInside(int r, int c)
+        public bool IsInside(int r, int c)
         {
             /* To be inside the grid, the row must be greater than or equal to 0  
              * and less than the number of rows. Similarily for the column, 
@@ -27,15 +27,15 @@
             return r >= 0 && r < Rows && c >= 0 && c < Columns; 
         }
         /* This method checks if a given cell is empty or not */
-        public bool isEmpty(int r, int c)
+        public bool IsEmpty(int r, int c)
         {
             /* It must be inside the grid and the value at that entry in the array must be
              * be zero.
              */
-            return isInside(r, c) && grid[r, c] == 0;
+            return IsInside(r, c) && grid[r, c] == 0;
         }
         /* This method checks if an entire row is full */ 
-        public bool isRowFull(int r)
+        public bool IsRowFull(int r)
         {
             for(int c =0; c < Columns; c++)
             {
@@ -50,7 +50,7 @@
         /* When there are full rows they need to be cleared
          * and the rows above should be move down
          */
-        public bool isRowEmpty(int r)
+        public bool IsRowEmpty(int r)
         {
             for (int c = 0; c < Columns; c++)
             {
@@ -87,7 +87,7 @@
              * and increment cleared */
             for(int r = Rows-1; r >= 0; r--)
             {
-                if (isRowFull(r))
+                if (IsRowFull(r))
                 {
                     ClearRow(r);
                     cleared++;
